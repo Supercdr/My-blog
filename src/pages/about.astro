@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { siteConfig } from "@/config";
+import { siteConfig, withBase } from "@/config";
 ---
 
 <BaseLayout
@@ -19,7 +19,7 @@ import { siteConfig } from "@/config";
 
     <figure class="container about-visual">
       <img
-        src="/images/quiet-desk.png"
+        src={withBase("/images/quiet-desk.png")}
         alt="纸张、钢笔与咖啡杯组成的安静写作场景"
         width="1536"
         height="1024"

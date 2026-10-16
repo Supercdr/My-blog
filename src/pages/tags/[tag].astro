@@ -1,6 +1,7 @@
 ---
 import ArticleCard from "@/components/ArticleCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { withBase } from "@/config";
 import {
   collectTags,
   getPublishedPosts,
@@ -35,7 +36,7 @@ const allTags = [...collectTags(await getPublishedPosts()).keys()];
       </div>
 
       <nav class="tag-navigation" aria-label="切换标签">
-        <a class="tag-chip" href="/blog">全部</a>
+        <a class="tag-chip" href={withBase("/blog")}>全部</a>
         {
           allTags.map((item) => (
             <a class:list={["tag-chip", { active: item === tag }]} href={getTagHref(item)}>

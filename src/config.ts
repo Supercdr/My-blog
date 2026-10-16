@@ -12,3 +12,14 @@ export const siteConfig = {
     { label: "关于", href: "/about" }
   ]
 } as const;
+
+export function withBase(path = "/"): string {
+  if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(path) || path.startsWith("#")) {
+    return path;
+  }
+
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+
+  return `${base}${normalizedPath}` || "/";
+}

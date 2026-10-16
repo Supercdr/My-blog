@@ -1,4 +1,5 @@
 import type { APIContext } from "astro";
+import { withBase } from "@/config";
 import {
   collectTags,
   getPostHref,
@@ -12,7 +13,7 @@ const escapeXML = (value: string) =>
 export async function GET(context: APIContext) {
   const posts = await getPublishedPosts();
   const siteURL = context.site ?? new URL("https://example.com");
-  const staticPaths = ["/", "/blog", "/tags", "/about"];
+  const staticPaths = ["/", "/blog", "/tags", "/about"].map(withBase);
   const tagPaths = [...collectTags(posts).keys()].map(getTagHref);
   const paths = [...staticPaths, ...tagPaths, ...posts.map(getPostHref)];
 

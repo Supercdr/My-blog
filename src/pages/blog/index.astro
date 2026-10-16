@@ -1,6 +1,7 @@
 ---
 import ArticleCard from "@/components/ArticleCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { withBase } from "@/config";
 import {
   collectTags,
   getPublishedPosts,
@@ -24,7 +25,7 @@ const tags = [...collectTags(posts).keys()];
       </div>
 
       <nav class="archive-tags" aria-label="按标签浏览">
-        <a class="tag-chip active" href="/blog">全部</a>
+        <a class="tag-chip active" href={withBase("/blog")}>全部</a>
         {
           tags.map((tag) => (
             <a class="tag-chip" href={getTagHref(tag)}>

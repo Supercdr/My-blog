@@ -1,7 +1,7 @@
 ---
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
-import { siteConfig } from "@/config";
+import { siteConfig, withBase } from "@/config";
 import "@/styles/global.css";
 
 interface Props {
@@ -26,8 +26,12 @@ const {
 
 const pageTitle = title ? `${title} | ${siteConfig.title}` : siteConfig.title;
 const siteURL = Astro.site ?? new URL("https://example.com");
-const canonicalURL = new URL(Astro.url.pathname, siteURL);
-const ogImageURL = new URL(image, siteURL);
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const isHomePage =
+  basePath === "" ? Astro.url.pathname === "/" : Astro.url.pathname === basePath;
+const canonicalPath = isHomePage ? `${basePath}/` || "/" : Astro.url.pathname;
+const canonicalURL = new URL(canonicalPath, siteURL);
+const ogImageURL = new URL(withBase(image), siteURL);
 ---
 
 <!doctype html>
@@ -40,8 +44,13 @@ const ogImageURL = new URL(image, siteURL);
     <meta name="color-scheme" content="light" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href="/rss.xml" />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={siteConfig.title}
+      href={withBase("/rss.xml")}
+    />
 
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:type" content={type} />

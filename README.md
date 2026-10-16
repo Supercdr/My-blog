@@ -64,16 +64,32 @@ draft: false
 - `src/pages/index.astro`
 - `src/pages/about.astro`
 
-## 发布到公网
+## 发布到 GitHub Pages
 
-这是一个静态站点，可以部署到 Vercel、Netlify、Cloudflare Pages 或 GitHub Pages。
+项目已包含 `.github/workflows/deploy.yml`。GitHub Pages 必须使用 Actions 构建，而不是让 Jekyll 直接发布 Astro 源码，否则 Jekyll 会误把 `.astro` 文件中的 `---` 当成 YAML front matter。
 
-推荐流程：
+首次部署：
 
-1. 把项目提交到一个 Git 仓库。
-2. 在部署平台导入仓库。
-3. 构建命令填写 `npm run build`。
-4. 输出目录填写 `dist`。
-5. 设置环境变量 `SITE_URL` 为正式域名，例如 `https://blog.example.com`。
+1. 把修改推送到 GitHub 的 `main` 分支。
+2. 打开仓库的 `Settings` → `Pages`。
+3. 在 `Build and deployment` 中将 `Source` 设为 `GitHub Actions`。
+4. 打开 `Actions`，运行或等待 `Deploy to GitHub Pages` 完成。
 
-每次推送到主分支后，平台会自动重新构建和发布。域名配置完成后，站点地图位于 `/sitemap.xml`，RSS 位于 `/rss.xml`。
+项目仓库 `Supercdr/My-blog` 的默认地址通常是：
+
+```text
+https://supercdr.github.io/My-blog/
+```
+
+工作流会自动提供 `SITE_URL` 和 `BASE_PATH`，因此项目页的子路径、CSS、图片、文章链接和 SEO 地址都能正确生成。使用自定义域名时，在 Pages 设置中完成域名绑定即可。
+
+每次推送到 `main` 分支后都会自动重新构建和发布。站点地图位于 `/My-blog/sitemap.xml`，RSS 位于 `/My-blog/rss.xml`。
+
+## 发布到其他平台
+
+项目也可以部署到 Vercel、Netlify 或 Cloudflare Pages：
+
+- 构建命令：`npm run build`
+- 输出目录：`dist`
+- 站点根路径的 `SITE_URL`：例如 `https://blog.example.com`
+- 站点根路径的 `BASE_PATH`：`/`

@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from "astro:content";
+import { withBase } from "@/config";
 
 export type Post = CollectionEntry<"posts">;
 
@@ -11,11 +12,11 @@ export async function getPublishedPosts(): Promise<Post[]> {
 }
 
 export function getPostHref(post: Post): string {
-  return `/blog/${post.id}`;
+  return withBase(`/blog/${post.id}`);
 }
 
 export function getTagHref(tag: string): string {
-  return `/tags/${tagSlug(tag)}`;
+  return withBase(`/tags/${tagSlug(tag)}`);
 }
 
 export function tagSlug(tag: string): string {

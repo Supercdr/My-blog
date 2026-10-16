@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from "@/config";
+import { siteConfig, withBase } from "@/config";
 
 const year = new Date().getFullYear();
 ---
@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
     </div>
     <div class="footer-links">
       <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-      <a href="/rss.xml">RSS</a>
+      <a href={withBase("/rss.xml")}>RSS</a>
       <span>© {year} {siteConfig.author}</span>
     </div>
   </div>

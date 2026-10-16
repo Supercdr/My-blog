@@ -3,7 +3,7 @@ import { render } from "astro:content";
 import { ArrowLeft, ArrowRight } from "lucide-astro";
 import ArticleShare from "@/components/ArticleShare.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { siteConfig } from "@/config";
+import { siteConfig, withBase } from "@/config";
 import {
   formatDate,
   getPostHref,
@@ -55,7 +55,7 @@ const section = post.data.tags[0] ?? "文章";
 >
   <article class="article-page">
     <header class="container article-header">
-      <a class="back-link" href="/blog">
+      <a class="back-link" href={withBase("/blog")}>
         <ArrowLeft size={14} stroke-width={1.8} aria-hidden="true" />
         返回文章列表
       </a>

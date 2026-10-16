@@ -1,5 +1,5 @@
 import type { APIContext } from "astro";
-import { siteConfig } from "@/config";
+import { siteConfig, withBase } from "@/config";
 import { getPostHref, getPublishedPosts } from "@/utils/content";
 
 const escapeXML = (value: string) =>
@@ -13,7 +13,8 @@ const escapeXML = (value: string) =>
 export async function GET(context: APIContext) {
   const posts = await getPublishedPosts();
   const siteURL = context.site ?? new URL("https://example.com");
-  const feedURL = new URL("/rss.xml", siteURL).toString();
+  const channelURL = new URL(withBase("/"), siteURL).toString();
+  const feedURL = new URL(withBase("/rss.xml"), siteURL).toString();
 
   const items = posts
     .map((post) => {
@@ -37,7 +38,7 @@ export async function GET(context: APIContext) {
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
       <channel>
         <title>${escapeXML(siteConfig.title)}</title>
-        <link>${escapeXML(siteURL.toString())}</link>
+        <link>${escapeXML(channelURL)}</link>
         <description>${escapeXML(siteConfig.description)}</description>
         <language>zh-CN</language>
         <atom:link href="${escapeXML(feedURL)}" rel="self" type="application/rss+xml" />

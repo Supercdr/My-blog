@@ -1,7 +1,7 @@
 ---
 import ArticleCard from "@/components/ArticleCard.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { siteConfig } from "@/config";
+import { siteConfig, withBase } from "@/config";
 import {
   collectTags,
   formatDate,
@@ -51,7 +51,7 @@ const latestPost = posts[0];
 
   <figure class="container home-visual">
     <img
-      src="/images/quiet-desk.png"
+      src={withBase("/images/quiet-desk.png")}
       alt="清晨窗边放着纸张、钢笔和一杯咖啡的安静桌面"
       width="1536"
       height="1024"
@@ -63,7 +63,7 @@ const latestPost = posts[0];
     <div class="post-list">
       <div class="section-heading">
         <h2>近期文章</h2>
-        <a href="/blog">查看全部</a>
+        <a href={withBase("/blog")}>查看全部</a>
       </div>
       {posts.slice(0, 4).map((post, index) => <ArticleCard post={post} index={index} />)}
     </div>
