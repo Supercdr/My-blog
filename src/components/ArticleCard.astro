@@ -1,0 +1,132 @@
+---
+import type { Post } from "@/utils/content";
+import { formatDate, getPostHref, getTagHref } from "@/utils/content";
+
+interface Props {
+  post: Post;
+  index?: number;
+}
+
+const { post, index } = Astro.props;
+---
+
+<article class="post-row">
+  <div class="post-order" aria-hidden="true">
+    {typeof index === "number" ? String(index + 1).padStart(2, "0") : "—"}
+  </div>
+  <div class="post-content">
+    <div class="post-meta">
+      <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+      {post.data.featured && <span class="featured">精选</span>}
+    </div>
+    <h2>
+      <a href={getPostHref(post)}>{post.data.title}</a>
+    </h2>
+    <p>{post.data.description}</p>
+    {
+      post.data.tags.length > 0 && (
+        <div class="tag-row">
+          {post.data.tags.map((tag) => (
+            <a class="tag" href={getTagHref(tag)}>
+              {tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .post-row {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.8rem 0 1.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .post-order {
+    padding-top: 0.18rem;
+    color: var(--muted-light);
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .featured {
+    color: var(--rust);
+  }
+
+  h2 {
+    margin: 0.35rem 0 0.5rem;
+    font-family: var(--serif);
+    font-size: 1.46rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    color: var(--accent);
+  }
+
+  p {
+    max-width: 43rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.94rem;
+    line-height: 1.8;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.48rem;
+    margin-top: 0.9rem;
+  }
+
+  .tag {
+    color: var(--accent);
+    font-size: 0.76rem;
+    text-decoration: none;
+  }
+
+  .tag::before {
+    margin-right: 0.12rem;
+    color: var(--accent);
+    content: "#";
+  }
+
+  .tag:hover {
+    color: var(--rust);
+  }
+
+  @media (max-width: 620px) {
+    .post-row {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+      padding: 1.55rem 0 1.65rem;
+    }
+
+    .post-order {
+      display: none;
+    }
+
+    h2 {
+      font-size: 1.26rem;
+    }
+  }
+</style>

@@ -1,0 +1,57 @@
+---
+import ArticleCard from "@/components/ArticleCard.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  collectTags,
+  getPublishedPosts,
+  getTagHref
+} from "@/utils/content";
+
+const posts = await getPublishedPosts();
+const tags = [...collectTags(posts).keys()];
+---
+
+<BaseLayout
+  title="文章"
+  description="按时间浏览全部文章，涵盖写作、设计、技术与日常观察。"
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="page-heading">
+        <p class="page-kicker">Archive</p>
+        <h1>文章</h1>
+        <p>从最近一篇开始，按时间向下阅读。所有文章都用 Markdown 管理，保持简单、透明和可迁移。</p>
+      </div>
+
+      <nav class="archive-tags" aria-label="按标签浏览">
+        <a class="tag-chip active" href="/blog">全部</a>
+        {
+          tags.map((tag) => (
+            <a class="tag-chip" href={getTagHref(tag)}>
+              {tag}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="archive-list">
+        {posts.map((post, index) => <ArticleCard post={post} index={index} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .archive-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 2.2rem;
+    padding-bottom: 2.7rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .archive-list {
+    margin-top: 0.25rem;
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  collectTags,
+  formatDate,
+  getPostHref,
+  getPublishedPosts,
+  getTagHref
+} from "@/utils/content";
+
+const posts = await getPublishedPosts();
+const tags = [...collectTags(posts).entries()];
+---
+
+<BaseLayout
+  title="标签"
+  description="按主题浏览博客文章，快速找到写作、设计、技术等不同方向的内容。"
+>
+  <section class="page-section">
+    <div class="container">
+      <div class="page-heading">
+        <p class="page-kicker">Topics</p>
+        <h1>标签</h1>
+        <p>标签不是目录，只是一束束线索。从这里进入你更关心的话题。</p>
+      </div>
+
+      <div class="tag-index">
+        {
+          tags.map(([tag, entries]) => (
+            <section class="tag-section">
+              <div class="tag-section-heading">
+                <h2>
+                  <a href={getTagHref(tag)}>{tag}</a>
+                </h2>
+                <span>{entries.length} 篇</span>
+              </div>
+              <ol>
+                {entries.map((post) => (
+                  <li>
+                    <a href={getPostHref(post)}>{post.data.title}</a>
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {formatDate(post.data.pubDate)}
+                    </time>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tag-index {
+    margin-top: 3.2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .tag-section {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: 2rem;
+    padding: 2rem 0 2.2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tag-section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    color: var(--accent);
+  }
+
+  .tag-section-heading span {
+    color: var(--muted-light);
+    font-size: 0.72rem;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+  }
+
+  li:first-child {
+    padding-top: 0;
+  }
+
+  li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  li a {
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1rem;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    color: var(--accent);
+  }
+
+  time {
+    flex: 0 0 auto;
+    color: var(--muted-light);
+    font-size: 0.72rem;
+  }
+
+  @media (max-width: 720px) {
+    .tag-section {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    li {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+  }
+</style>

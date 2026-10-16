@@ -1,0 +1,81 @@
+---
+import { siteConfig } from "@/config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-title">{siteConfig.title}</p>
+      <p class="footer-copy">{siteConfig.tagline}</p>
+    </div>
+    <div class="footer-links">
+      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+      <a href="/rss.xml">RSS</a>
+      <span>© {year} {siteConfig.author}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 6rem;
+    padding: 2.25rem 0 3rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .footer-title {
+    margin: 0 0 0.15rem;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .footer-copy {
+    max-width: 24rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.45rem 1.1rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .footer-links a {
+    color: inherit;
+    text-underline-offset: 0.23em;
+  }
+
+  .footer-links a:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 700px) {
+    .site-footer {
+      margin-top: 4.5rem;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-links {
+      justify-content: flex-start;
+    }
+  }
+</style>

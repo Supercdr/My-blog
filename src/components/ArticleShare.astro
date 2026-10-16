@@ -1,0 +1,131 @@
+---
+import { ArrowUpRight, Copy, Share2 } from "lucide-astro";
+
+interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+const weiboURL = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(
+  url
+)}&title=${encodeURIComponent(title)}`;
+---
+
+<div class="share-block" data-share-root>
+  <span class="share-label">分享</span>
+  <div class="share-actions">
+    <button class="share-button" type="button" data-native-share data-title={title} data-url={url} hidden>
+      <Share2 size={15} stroke-width={1.8} aria-hidden="true" />
+      <span>系统分享</span>
+    </button>
+    <a class="share-button" href={weiboURL} target="_blank" rel="noreferrer">
+      <ArrowUpRight size={15} stroke-width={1.8} aria-hidden="true" />
+      <span>微博</span>
+    </a>
+    <button class="share-button" type="button" data-copy-url data-url={url}>
+      <Copy size={15} stroke-width={1.8} aria-hidden="true" />
+      <span>复制链接</span>
+    </button>
+    <span class="share-status" data-share-status aria-live="polite"></span>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-share-root]").forEach((root) => {
+    const nativeButton = root.querySelector<HTMLButtonElement>("[data-native-share]");
+    const copyButton = root.querySelector<HTMLButtonElement>("[data-copy-url]");
+    const status = root.querySelector<HTMLElement>("[data-share-status]");
+
+    if (nativeButton && typeof navigator.share === "function") {
+      nativeButton.hidden = false;
+      nativeButton.addEventListener("click", async () => {
+        try {
+          await navigator.share({
+            title: nativeButton.dataset.title,
+            url: nativeButton.dataset.url
+          });
+        } catch (error) {
+          if ((error as DOMException).name !== "AbortError" && status) {
+            status.textContent = "暂时无法分享";
+          }
+        }
+      });
+    }
+
+    copyButton?.addEventListener("click", async () => {
+      const url = copyButton.dataset.url ?? window.location.href;
+
+      try {
+        await navigator.clipboard.writeText(url);
+        if (status) status.textContent = "链接已复制";
+      } catch {
+        if (status) status.textContent = "请手动复制地址栏链接";
+      }
+
+      window.setTimeout(() => {
+        if (status) status.textContent = "";
+      }, 2200);
+    });
+  });
+</script>
+
+<style>
+  .share-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .share-label {
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .share-button {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    gap: 0.38rem;
+    padding: 0.25rem 0.72rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.76rem;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      border-color 160ms ease,
+      color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .share-button:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .share-button[hidden] {
+    display: none;
+  }
+
+  .share-status {
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+</style>

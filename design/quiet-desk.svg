@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+  <defs>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="18"/>
+      <feOffset dx="0" dy="18" result="offsetblur"/>
+      <feColorMatrix
+        in="offsetblur"
+        type="matrix"
+        values="0 0 0 0 0.10 0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0.22 0"
+      />
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="light-shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="11"/>
+      <feOffset dx="0" dy="10" result="offsetblur"/>
+      <feColorMatrix
+        in="offsetblur"
+        type="matrix"
+        values="0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.18 0"
+      />
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1536" height="1024" fill="#ece8df"/>
+  <rect y="620" width="1536" height="404" fill="#d9cdb8"/>
+  <path d="M0 620h1536" stroke="#c8bba5" stroke-width="3"/>
+  <path d="M112 765h1312" stroke="#cbbda7" stroke-width="2" opacity=".55"/>
+
+  <g transform="rotate(-2.4 770 492)" filter="url(#soft-shadow)">
+    <rect x="292" y="168" width="838" height="642" fill="#fbfaf5"/>
+    <rect x="326" y="205" width="770" height="568" fill="none" stroke="#d6d0c3" stroke-width="2"/>
+    <rect x="366" y="259" width="178" height="8" fill="#326a53"/>
+    <path d="M366 304h468M366 340h690M366 376h627M366 412h710M366 448h584" stroke="#b7b4aa" stroke-width="5" stroke-linecap="round" opacity=".72"/>
+    <path d="M366 535h533M366 573h676M366 611h603M366 649h718" stroke="#c6c2b8" stroke-width="5" stroke-linecap="round" opacity=".68"/>
+    <path d="M806 459c38-21 75-19 110 4s70 23 105 1" fill="none" stroke="#a35138" stroke-width="4" stroke-linecap="round" opacity=".72"/>
+    <path d="M842 492c27-11 52-10 78 4" fill="none" stroke="#a35138" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+  </g>
+
+  <g filter="url(#light-shadow)">
+    <ellipse cx="1193" cy="733" rx="190" ry="44" fill="#4d4437" opacity=".24"/>
+    <path d="M1042 535h286l-31 176c-4 24-25 42-49 42h-126c-24 0-45-18-49-42z" fill="#f8f5ed" stroke="#c9c1b1" stroke-width="3"/>
+    <ellipse cx="1185" cy="535" rx="143" ry="39" fill="#f8f5ed" stroke="#c9c1b1" stroke-width="3"/>
+    <ellipse cx="1185" cy="538" rx="111" ry="27" fill="#876f55"/>
+    <path d="M1091 548c39 18 145 18 188 0" fill="none" stroke="#f3e8d5" stroke-width="4" stroke-linecap="round" opacity=".54"/>
+    <path d="M1325 581c66 6 92 43 84 85-8 46-53 72-106 61" fill="none" stroke="#c9c1b1" stroke-width="25" stroke-linecap="round"/>
+    <path d="M1325 581c51 5 74 33 68 67-6 37-43 58-83 51" fill="none" stroke="#f8f5ed" stroke-width="14" stroke-linecap="round"/>
+  </g>
+
+  <g transform="rotate(-23 246 720)" filter="url(#light-shadow)">
+    <rect x="188" y="294" width="20" height="506" rx="10" fill="#252823"/>
+    <path d="M188 294h20l-10-44z" fill="#c9b898"/>
+    <path d="M194 250l4-28 4 28z" fill="#1d1e1b"/>
+    <rect x="188" y="694" width="20" height="98" fill="#326a53"/>
+  </g>
+
+  <g transform="translate(139 207)">
+    <rect width="86" height="258" fill="#a35138"/>
+    <rect x="0" y="191" width="86" height="67" fill="#91452f"/>
+    <circle cx="43" cy="226" r="10" fill="#f2ede3" opacity=".86"/>
+  </g>
+</svg>

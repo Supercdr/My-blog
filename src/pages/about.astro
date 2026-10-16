@@ -1,0 +1,163 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { siteConfig } from "@/config";
+---
+
+<BaseLayout
+  title="关于"
+  description={`关于${siteConfig.author}与这个独立博客的写作方向。`}
+>
+  <article class="about-page">
+    <header class="container about-header">
+      <p class="page-kicker">About</p>
+      <h1>写代码，也写文字。</h1>
+      <p>
+        我叫 {siteConfig.author}。这里记录我对写作、设计、技术和日常生活的观察，
+        也保存那些不适合被压缩成一句结论的思考。
+      </p>
+    </header>
+
+    <figure class="container about-visual">
+      <img
+        src="/images/quiet-desk.png"
+        alt="纸张、钢笔与咖啡杯组成的安静写作场景"
+        width="1536"
+        height="1024"
+      />
+    </figure>
+
+    <div class="container about-content">
+      <section>
+        <p class="section-label">为什么写</p>
+        <div class="prose">
+          <p>
+            写作对我来说，不只是输出答案。它更像一种整理：把模糊的直觉放到纸面上，
+            检查它是否经得起推敲，也允许它暂时没有结论。
+          </p>
+          <p>
+            这个博客没有追逐热点的任务。我更愿意讨论那些过一段时间仍然值得回看的问题：
+            怎样做判断，怎样设计一个不打扰人的产品，怎样在信息过载里保留自己的注意力。
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">这里会写什么</p>
+        <div class="prose">
+          <ul>
+            <li>写作与思考方法</li>
+            <li>产品、界面与设计判断</li>
+            <li>前端工程与独立开发</li>
+            <li>阅读、城市和日常生活的片段</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">联系</p>
+        <div class="contact-lines">
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+          <span>{siteConfig.location}</span>
+          <span>本站使用 Astro 构建，内容持续更新。</span>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about-header {
+    max-width: 860px;
+    padding-top: 5rem;
+  }
+
+  .about-header h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    font-weight: 600;
+    line-height: 1.24;
+  }
+
+  .about-header > p:last-child {
+    max-width: 42rem;
+    margin: 1.35rem 0 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.95;
+  }
+
+  .about-visual {
+    max-width: 860px;
+    margin-top: 3.2rem;
+  }
+
+  .about-visual img {
+    width: 100%;
+    aspect-ratio: 16 / 8.5;
+    object-fit: cover;
+  }
+
+  .about-content {
+    max-width: 760px;
+    margin-top: 4.8rem;
+  }
+
+  .about-content section {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 2.2rem 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .about-content section:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    margin: 0.45rem 0 0;
+    color: var(--accent);
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+
+  .contact-lines {
+    display: grid;
+    gap: 0.7rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .contact-lines a {
+    color: var(--accent);
+  }
+
+  @media (max-width: 700px) {
+    .about-header {
+      padding-top: 3.7rem;
+    }
+
+    .about-header h1 {
+      font-size: 2.5rem;
+    }
+
+    .about-visual img {
+      aspect-ratio: 4 / 3;
+    }
+
+    .about-content {
+      margin-top: 3.5rem;
+    }
+
+    .about-content section {
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+      padding: 1.7rem 0;
+    }
+
+    .section-label {
+      margin-top: 0;
+    }
+  }
+</style>
